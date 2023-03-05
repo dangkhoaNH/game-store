@@ -1,0 +1,749 @@
+﻿@using GameStore.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<tblSanPham>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    .product__love-heading {
+        text-align: center;
+    }
+
+    .ilovepro {
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+
+    .name-limit {
+      padding: 16px 0px 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 20px;
+      -webkit-line-clamp: 1;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+    }
+
+    .product__panel-link.name-limit-2 {
+        padding: 16px 0px 0px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 20px;
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+    }
+
+    .container-blog {
+      position: relative;
+      width: 1100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 30px;
+    }
+
+    .container-blog .card {
+      position: relative;
+      max-width: 300px;
+      height: 215px;
+      background: #f7eab5;
+      margin: 30px 10px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s ease-in-out;
+    }
+
+    .container-blog .card:hover {
+      height: 420px;
+    }
+
+    .container-blog .card .imgBx {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      top: -60px;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .container-blog .card .imgBx img {
+      max-width: 100%;
+      border-radius: 4px;
+    }
+
+    .container-blog .card .content {
+      position: relative;
+      margin-top: -140px;
+      padding: 10px 15px;
+      text-align: center;
+      color: #111;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s ease-in-out;
+    }
+
+    .container-blog .card:hover .content {
+      visibility: visible;
+      opacity: 1;
+      margin-top: -40px;
+      transition-delay: 0.3s;
+    }
+
+    /*  Login animation */
+    .login-popup {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1099;
+      background-color: rgba(0, 0, 0, 0.6);
+      visibility: hidden;
+      opacity: 0;
+      transition: all 1s ease;
+    }
+
+    .login-popup.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .login-popup .box {
+      background-color: #ffffff;
+      width: 570px;
+      height: 322px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-wrap: wrap;
+      opacity: 0;
+      margin-left: 50px;
+      transition: all 1s ease;
+      border-radius: 15px;
+    }
+
+    .login-popup.show .box {
+      opacity: 1;
+      margin-left: 0;
+    }
+
+    .login-popup .box .img-area {
+      flex: 0 0 50%;
+      max-width: 50%;
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-popup .box .img-area h1 {
+      font-size: 30px;
+    }
+
+    .login-popup .box .img-area .img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 91.6%;
+      background-image: url("../../Content/images/corona.jpg");
+      background-size: cover;
+      background-position: center;
+      animation: zoomInOut 7s linear infinite;
+      z-index: -1;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+    }
+
+    .login-popup .box .form {
+      flex: 0 0 50%;
+      max-width: 50%;
+      padding: 40px 30px;
+    }
+
+    .login-popup .box .form .close {
+      position: absolute;
+      right: 10px;
+      top: 0px;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .box .content h3 {
+      color: #333;
+      line-height: 1em;
+      font-weight: bold;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .box .content h2 {
+      font-size: 30px;
+      color: #ff4d54;
+      font-weight: bold;
+    }
+
+    .box .content p {
+      text-align: center;
+    }
+
+    .gach-ngang {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0,0,0,.1);
+    }
+
+    .clearilove {
+        margin-top: 20px;
+    }
+
+    .slider-video {
+      position: relative;
+      background: #000116;
+      width: 1090px;
+      min-height: 550px;
+      margin: 10px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .slider-video .slide1 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip-path: circle(0% at 0 50%);
+    }
+
+    .slider-video .slide1.active {
+      clip-path: circle(150% at 0 50%);
+      transition: 2s;
+    }
+
+    .slider-video .slide1 iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .navigation {
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .slider-video:hover .navigation {
+      opacity: 1;
+    }
+
+    .prev-btn,
+    .next-btn {
+      z-index: 999;
+      font-size: 2em;
+      color: #222;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .prev-btn {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+
+    .next-btn {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    .navigation-visibility {
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+    }
+
+    .navigation-visibility .slide-icon {
+      z-index: 999;
+      background: rgba(255, 255, 255, 0.5);
+      width: 20px;
+      height: 10px;
+      transform: translateY(-50px);
+      margin: 0 6px;
+      border-radius: 2px;
+      box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
+    }
+
+    .navigation-visibility .slide-icon.active {
+      background: #4285f4;
+    }
+
+    .banner-ads img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .row-image img {
+      width: 33%;
+      height: 100%;
+      justify-content: space-evenly;
+      transition: 0.6s ease-in-out;
+    }
+
+    .row-image img:hover {
+      transform: scale(1.1);
+    }
+
+    .clear {
+      margin-bottom: 5px;
+    }
+
+    .brands li img {
+      width: 45%;
+      object-fit: contain;
+      height: 12rem;
+    }
+
+    .logo-brand {
+      margin-top: 25px;
+      border: 0;
+      border-top: 1px solid #ff0000;
+    }
+
+    .product-banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 50%;
+      background-color: #e9e9e7;
+    }
+
+    .product-banner .left img {
+      object-fit: cover;
+      height: 100%;
+      width: 115%;
+    }
+
+    .product-banner .right {
+      align-self: center;
+      text-align: center;
+      padding: 1.6rem;
+      padding-left: 20%;
+    }
+
+    .product-banner .content h2 {
+      color: #fbb419;
+      font-size: 50px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .product-banner .content .discount {
+      color: #b888ff;
+    }
+
+    .product-banner .content h1 span {
+      color: #000;
+      font-size: 50px;
+      font-weight: 700;
+      display: block;
+      line-height: 1;
+    }
+
+    .btn-group .button {
+      background-color: #f24137; /* Green */
+      border: 1px solid green;
+      color: white;
+      padding: 10px 24px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      cursor: pointer;
+      float: left;
+      border-radius: 3px;
+    }
+
+    .btn-group .button:not(:last-child) {
+      border-right: none; /* Prevent double borders */
+    }
+
+    .btn-group .button:hover {
+      background-color: white;
+      color: #000;
+    }
+
+    .tieu-de h2 {
+        text-align: center;
+        font-weight: bold;
+        color: red;
+    }
+
+    .tieu-de p {
+        text-align: center;
+    }
+
+    .pagination-custom li {
+      display: inline;
+    }
+
+    .pagination-custom li a {
+      background-color: #fa5252;
+      margin-right: 10px;
+      display: inline-block;
+      padding: 8px 16px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .row.boxcenter{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<!-- Popup start -->
+<div class="login-popup">
+    <div class="box">
+        <div class="img-area">
+            <div class="img">
+            </div>
+        </div>
+        <div class="form">
+            <div class="close">&times;</div>
+            <div class="content">
+                <div>
+                    <h3>CHUNG TAY PHÒNG CHỐNG</h3><br>
+                    <h2>
+                        DỊCH COVID-19<br>
+                        ------------------
+                    </h2>
+                    <p>
+                        GameStoreK3T đã chuyển sang hoạt động bán hàng trực tuyến
+                        từ ngày 20/05.<br>
+                        Hotline hỗ trợ: 0332 246 820
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Popup end -->
+<!-- menu list -->
+<div class="row backroud">
+
+    <!-- Start: Load tat ca the loai ra trang chu -->
+    @Html.Action("Loaisp", "GameProduct")
+    <!-- End: Load tat ca the loai ra trang chu -->
+
+    <div class="col-md-9 slider">
+        <div class="row">
+            <div class="col-md-8 slider-left">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="~/Content/images/banner1.jpg" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/banner2.jpg" alt="Second slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <div class="slide__left-bottom">
+                    <div class="slide__left-botom-one">
+                        <img class="slide__left-bottom-one-img" src="~/Content/images/banner6.jpg">
+                    </div>
+                    <div class="slide__left-bottom-two">
+                        <img class="slide__left-bottom-tow-img" src="~/Content/images/banner7.jpg">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 slide__right">
+                <img class="slide__right-img" src="~/Content/images/banner8.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end menu list -->
+<!-- San pham moi ve -->
+<hr class="gach-ngang" />
+<div class="row">
+    <div class="bestselling__heading-wrap">
+        <div class="bestselling__heading">Sản phẩm mới tháng 12</div>
+    </div>
+</div>
+
+<div class="clearilove"></div>
+
+<hr />
+<!-- end bestselling -->
+<!-- product -->
+<div class="row">
+<div class="col-md-12 product__content">
+    <div class="row boxcenter">
+        @foreach (var game in Model)
+        {
+            <div class="col-md-3 product__panel-item">
+                <div class="product__panel-item-wrap">
+                    <div class="product__panel-img-wrap">
+                        <a href="@Url.Action("Details", "GameProduct", new { id = game.MaSP})"><img class="product__panel-img" src="~/Content/Hinhsanpham/@game.HinhAnh" alt="@game.TenSP"></a>
+                    </div>
+                    <h3 class="product__panel-heading">
+                        <a href="@Url.Action("Details", "GameProduct", new { id = game.MaSP})" class="product__panel-link name-limit-2">@game.TenSP</a>
+                    </h3>
+                    <div class="product__panel-rate-wrap">
+                        <i class="fas fa-star product__panel-rate"></i>
+                        <i class="fas fa-star product__panel-rate"></i>
+                        <i class="fas fa-star product__panel-rate"></i>
+                        <i class="fas fa-star product__panel-rate"></i>
+                        <i class="fas fa-star product__panel-rate"></i>
+                    </div>
+                    <div class="product__panel-price">
+                        <span class="product__panel-price-old">
+                            <strike>@game.GiaTien ₫</strike>
+                        </span>
+                        <span class="product__panel-price-current">
+                            @game.GiaTien ₫
+                        </span>
+                    </div>
+                    <div class="product__panel-price-sale-off">
+                        -0%
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="pagination-custom">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+    </div>
+</div>
+</div>
+<!-- end product -->
+<!-- Video Slider start -->
+<hr class="logo-brand" />
+<div class="tieu-de">
+    <h2>Xem Ngay !</h2>
+    <p>Hãy xem và chọn cho bản thân một sản phẩm yêu thích nào :))</p>
+</div>
+<div class="slider-video">
+    <div class="slide1 active">
+        <iframe src="https://www.youtube.com/embed/0MTp4Unsbjc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="slide1">
+        <iframe src="https://www.youtube.com/embed/cNqxZinlWJg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="slide1">
+        <iframe src="https://www.youtube.com/embed/AWNW9npvYTM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="slide1">
+        <iframe src="https://www.youtube.com/embed/u4-FCsiF5x4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="slide1">
+        <iframe src="https://www.youtube.com/embed/bJxJIafN9go" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="navigation">
+        <i class="fas fa-chevron-left prev-btn"></i>
+        <i class="fas fa-chevron-right next-btn"></i>
+    </div>
+    <div class="navigation-visibility">
+        <div class="slide-icon active"></div>
+        <div class="slide-icon"></div>
+        <div class="slide-icon"></div>
+        <div class="slide-icon"></div>
+        <div class="slide-icon"></div>
+    </div>
+</div>
+
+<!-- Video Slider end -->
+<!-- product love -->
+<hr class="ilovepro" />
+<div class="row">
+    <div class="col-md-12 product__love-title">
+        <h2 class="product__love-heading">
+            Có thể bạn thích
+        </h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="owl-carousel owl-theme">
+            @foreach (var game in Model)
+                {
+                    <div class="item">
+                        <div class="product-img-wrap">
+                            <a href="@Url.Action("Details", "GameProduct", new { id = game.MaSP})"><img class="product__panel-img" src="~/Content/Hinhsanpham/@game.HinhAnh" alt="@game.TenSP"></a>
+                        </div>
+                        <h6 class="name-limit text-center">@game.TenSP</h6>
+                    </div>
+                }
+        </div>
+    </div>
+    <!-- SECTION BRAND-LOGO START-->
+    <div class="section brands container">
+        <hr class="logo-brand" />
+        <div class="glide" id="glide2">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    <li class="glide__slide">
+                        <img src="~/Content/images/EA.png" />
+                    </li>
+                    <li class="glide__slide">
+                        <img src="~/Content/images/ps4.png" />
+                    </li>
+                    <li class="glide__slide">
+                        <img src="~/Content/images/steam.png" />
+                    </li>
+                    <li class="glide__slide">
+                        <img src="~/Content/images/UBSoft.png" />
+                    </li>
+                    <li class="glide__slide">
+                        <img src="~/Content/images/xbox.png" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="logo-brand" />
+
+<section class="section">
+    <div class="product-banner">
+        <div class="left">
+            <img src="~/Content/images/driving.jpg" alt="" />
+        </div>
+        <div class="right">
+            <div class="content">
+                <h2><span class="discount">15% </span> SALE OFF</h2>
+                <h1>
+                    <span>Logitech G29</span>
+                    <span>DRIVING FORCE PS5</span>
+                </h1>
+                <div class="btn-group">
+                    <a class="button" href="@Url.Action("Index", "GameProduct")" style="text-decoration:none;color:black;font-weight:bold">Mua Ngay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const loginPopup = document.querySelector(".login-popup");
+    const close = document.querySelector(".close");
+
+    window.addEventListener("load", function () {
+        showPopup();
+    })
+    function showPopup() {
+        const timeLimit = 1 // seconds;
+        let i = 0;
+        const timer = setInterval(function () {
+            i++;
+            if (i == timeLimit) {
+                clearInterval(timer);
+                loginPopup.classList.add("show");
+            }
+            console.log(i)
+        }, 1000);
+    }
+    close.addEventListener("click", function () {
+        loginPopup.classList.remove("show");
+    })
+</script>
+
+<script type="text/javascript">
+    const slider = document.querySelector(".slider-video");
+    const nextBtn = document.querySelector(".next-btn");
+    const prevBtn = document.querySelector(".prev-btn");
+    const slides = document.querySelectorAll(".slide1");
+    const slideIcons = document.querySelectorAll(".slide-icon");
+    const numberOfSlides = slides.length;
+    var slideNumber = 0;
+
+    nextBtn.addEventListener("click", () => {
+        slides.forEach((slide) => {
+            slide.classList.remove("active");
+        });
+        slideIcons.forEach((slideIcon) => {
+            slideIcon.classList.remove("active");
+        });
+
+        slideNumber++;
+
+        if (slideNumber > (numberOfSlides - 1)) {
+            slideNumber = 0;
+        }
+
+        slides[slideNumber].classList.add("active");
+        slideIcons[slideNumber].classList.add("active");
+    });
+
+    prevBtn.addEventListener("click", () => {
+        slides.forEach((slide) => {
+            slide.classList.remove("active");
+        });
+        slideIcons.forEach((slideIcon) => {
+            slideIcon.classList.remove("active");
+        });
+
+        slideNumber--;
+
+        if (slideNumber < 0) {
+            slideNumber = numberOfSlides - 1;
+        }
+
+        slides[slideNumber].classList.add("active");
+        slideIcons[slideNumber].classList.add("active");
+    });
+
+    var playSlider;
+
+    var repeater = () => {
+        playSlider = setInterval(function () {
+            slides.forEach((slide) => {
+                slide.classList.remove("active");
+            });
+            slideIcons.forEach((slideIcon) => {
+                slideIcon.classList.remove("active");
+            });
+
+            slideNumber++;
+
+            if (slideNumber > (numberOfSlides - 1)) {
+                slideNumber = 0;
+            }
+
+            slides[slideNumber].classList.add("active");
+            slideIcons[slideNumber].classList.add("active");
+        }, 4000);
+    }
+    repeater();
+
+    slider.addEventListener("mouseover", () => {
+        clearInterval(playSlider);
+    });
+
+    slider.addEventListener("mouseout", () => {
+        repeater();
+    });
+</script>

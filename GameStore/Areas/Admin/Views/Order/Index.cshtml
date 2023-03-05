@@ -1,0 +1,62 @@
+﻿@using GameStore.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<GameStore.Models.tblDonHang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MyLayout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/style.css" rel="stylesheet" type="text/css">
+
+<h2 class="title-manage">Quản lý đơn hàng</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>Mã Đơn Hàng</th>
+        <th>Mã Khách Hàng</th>
+        <th>Ngày Lập</th>
+        <th>Ngày Giao</th>
+        <th>Đã Thanh Toán</th>
+        <th>Tình trạng giao hàng</th>
+        <th>Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaDH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaKH)
+            </td>
+            <td>
+                @String.Format("{0:dd/MM/yyyy}", item.NgayLap)
+            </td>
+            <td>
+                @String.Format("{0:dd/MM/yyyy}", item.NgayGiao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dathanhtoan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TinhTrangGiaoHang)
+            </td>
+            <td>
+                @Html.ActionLink("Xóa", "Delete", new { id = item.MaDH }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div class="pagination-custom">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+</div>
+<style>
+    .pagination-custom li {
+        display: inline;
+    }
+</style>

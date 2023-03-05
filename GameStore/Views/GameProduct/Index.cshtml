@@ -1,0 +1,64 @@
+﻿@using GameStore.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<tblSanPham>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+}
+
+<style>
+    .pagination-custom li {
+      display: inline;
+    }
+
+    .pagination-custom li a {
+      background-color: #fa5252;
+      margin-right: 10px;
+      display: inline-block;
+      padding: 8px 16px;
+      color: #fff;
+      text-decoration: none;
+    }
+</style>
+
+<h2 style="font-size:24px; text-align:center; padding-left: 290px; margin-top: -320px;"></h2>
+<div class="row" style="padding-left: 282px;">
+    @foreach (var game in Model)
+    {
+        <div class="col-md-4 product__panel-item mb-2" style="box-shadow: 1px 0 0 #aaa">
+            <div class="product__panel-item-wrap">
+                <div class="product__panel-img-wrap">
+                    <a href="@Url.Action("Details", "GameProduct", new { id = game.MaSP})"><img class="product__panel-img" src="~/Content/Hinhsanpham/@game.HinhAnh" alt="@game.TenSP"></a>
+                </div>
+                <h3 class="product__panel-heading">
+                    <a href="@Url.Action("Details", "GameProduct", new { id = game.MaSP})" class="product__panel-link name-limit-2">@game.TenSP</a>
+                </h3>
+                <div class="product__panel-rate-wrap">
+                    <i class="fas fa-star product__panel-rate"></i>
+                    <i class="fas fa-star product__panel-rate"></i>
+                    <i class="fas fa-star product__panel-rate"></i>
+                    <i class="fas fa-star product__panel-rate"></i>
+                    <i class="fas fa-star product__panel-rate"></i>
+                </div>
+                <div class="product__panel-price">
+                    <span class="product__panel-price-old">
+                        <strike>@game.GiaTien ₫</strike>
+                    </span>
+                    <span class="product__panel-price-current">
+                        @game.GiaTien ₫
+                    </span>
+                </div>
+                <div class="product__panel-price-sale-off">
+                    -0%
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="pagination-custom" style="position:absolute;margin-left:20%; margin-top:-1%">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+</div>
+
+<div class="space" style="margin-bottom:130px"></div>
+

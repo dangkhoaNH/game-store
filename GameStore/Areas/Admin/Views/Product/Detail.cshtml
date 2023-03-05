@@ -1,0 +1,88 @@
+﻿@model GameStore.Models.tblSanPham
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_MyLayout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/style.css" rel="stylesheet" type="text/css">
+
+<h2 class="title-manage">Chi Tiết Sản Phẩm</h2>
+
+<div>
+    <hr />
+    <dd>
+        <img src="@Url.Content("~/Content/Hinhsanpham/"+ Model.HinhAnh)" style="margin-left:60%;width:40%;margin-top:-10px;border-radius:10px" />
+    </dd>
+    <dl class="dl-horizontal" style="margin-top:-25%;margin-left:-17px;width:61%;border-radius:10px">
+        <dt>
+            Tên sản phẩm:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenSP)
+        </dd>
+
+        <dt>
+            Giá bán:
+        </dt>
+
+        <dd>
+            @String.Format("{0:0,0}", Model.GiaTien) VNĐ
+        </dd>
+
+        <dt>
+            Số lượng tồn:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoLuong)
+        </dd>
+
+        <dt>
+            Ngày cập nhật:
+        </dt>
+
+        <dd>
+            @String.Format("{0:dd/MM/yyyy}", Model.NgayCapNhat)
+        </dd>
+
+        <dt>
+            Mô tả:
+        </dt>
+
+        <dd style="width:500px; text-align:justify">
+            @Html.DisplayFor(model => model.MoTa)
+        </dd>
+
+        <dt>
+            Nhà cung cấp:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaNCC)
+        </dd>
+
+        <dt>
+            Thương hiệu:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaTH)
+        </dd>
+
+        <dt>
+            Loại sản phẩm:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaLoai)
+        </dd>
+
+    </dl>
+</div>
+
+@Html.ActionLink("Sửa", "Edit", new { id = Model.MaSP }, new { @class = "btn btn-info" }) |
+<a class="btn btn-primary" href="@Url.Action("Index")">Trở về</a>
+
+

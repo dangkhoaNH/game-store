@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GameStore.Models.tblThuongHieu>
+
+@{
+    ViewBag.Title = "Thuonghieu";
+    Layout = "~/Areas/Admin/Views/Shared/_MyLayout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/style.css" rel="stylesheet" type="text/css">
+
+<h2 class="title-manage">Quản lý thương hiệu</h2>
+
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            Tên thương hiệu
+        </th>
+        <th style="text-align: right">
+            Chức năng
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenTH)
+            </td>
+            <td align="right">
+                <button class="custom btn btn-primary">@Html.ActionLink("Sửa", "Edit", new { id = item.MaTH })</button> |
+                <button class="custom btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.MaTH })</button>
+            </td>
+        </tr>
+    }
+
+</table>
+
+

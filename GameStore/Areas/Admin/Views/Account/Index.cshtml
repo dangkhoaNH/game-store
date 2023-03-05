@@ -1,0 +1,74 @@
+﻿@model IEnumerable<GameStore.Models.tblTaiKhoan>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MyLayout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/style.css" rel="stylesheet" type="text/css">
+
+<style>
+    th, td {
+        text-align: center;
+    }
+    td p {
+        height: 50px;
+        overflow-y: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
+@section _Header
+{
+    <!-- DataTables CSS -->
+    <link href="/Areas/Admin/Content/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- DataTables Responsive CSS -->
+    <link href="/Areas/Admin/Content/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+}
+
+<h2 class="title-manage">Quản Lý Tài Khoản</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>Tên Đăng Nhập</th>
+        <th>Mật Khẩu</th>
+        <th>Mã Loại Tài Khoản</th>
+        <th>Chức Năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaLoaiTK)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.Username })
+            </td>
+        </tr>
+    }
+</table>
+
+@section _Footer
+{
+    <!-- DataTables JavaScript -->
+    <script src="/Areas/Admin/Content/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/Areas/Admin/Content/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="/Areas/Admin/Content/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+
+}

@@ -1,0 +1,67 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <link href="~/Content/dangnhap.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cont">
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img-text m-in">
+                    <h2>Có tài khoản ?</h2>
+                    <P>Nếu đã có tài khoản, hãy đăng nhập. Chúng tôi luôn chào đón</P>
+                </div>
+                <div class="img-btn">
+                    <span class="m-up">Đăng Ký</span>
+                    <span class="m-in">Đăng Nhập</span>
+                </div>
+            </div>
+            <div class="form sign-up">
+                @using (Html.BeginForm("Dangky", "Nguoidung", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <label>
+                        <span>Họ tên</span>
+                        <input type="text" name="HotenKH">
+                    </label>
+                    <label>
+                        <span>Tên đăng nhập</span>
+                        <input type="text" name="TenDN">
+                    </label>
+                    <label>
+                        <span>Mật khẩu</span>
+                        <input type="password" name="Matkhau">
+                    </label>
+                    <label>
+                        <span>Xác nhận mật khẩu</span>
+                        <input type="password" name="Nhaplaimatkhau">
+                    </label>
+                    <label>
+                        <span>Email</span>
+                        <input type="text" name="Email">
+                    </label>
+                    <label>
+                        <span>Địa chỉ</span>
+                        <input type="text" name="Diachi">
+                    </label>
+                    <label>
+                        <span>Số điện thoại</span>
+                        <input type="text" name="Dienthoai">
+                    </label>
+                    <button type="submit" class="submit">Đăng ký ngay !</button>
+                }
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/Content/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿@model GameStore.Models.tblKhachHang
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_MyLayout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/style.css" rel="stylesheet" type="text/css">
+
+<h2 class="title-manage">Xóa Khách Hàng</h2>
+
+<h3 style="text-align:center">Bạn thực sự muốn xóa khách hàng này?</h3>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên khách hàng:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenKH)
+        </dd>
+
+        <dt>
+            Tài khoản:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            Mật khẩu:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            Email:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Địa chỉ:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiaChi)
+        </dd>
+
+        <dt>
+            Số điện thoại:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SDT)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-danger" style="margin-left:562px" /> |
+            @Html.ActionLink("Trở Về", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+    <div class="delete-image">
+        <img src="~/Content/images/delete.gif" style="width: 26%; margin-left: 36.6%;" />
+    </div>
+</div>
+
+

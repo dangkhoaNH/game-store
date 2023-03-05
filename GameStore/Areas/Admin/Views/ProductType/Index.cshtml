@@ -1,0 +1,32 @@
+﻿@model IEnumerable<GameStore.Models.tblLoaiSanPham>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MyLayout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/style.css" rel="stylesheet" type="text/css">
+
+<h2 class="title-manage">Quản lý loại sản phẩm</h2>
+
+
+<table class="table table-striped">
+    <tr>
+        <th>Loại sản phẩm</th>
+        <th style="text-align: right">Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenLoai)
+            </td>
+            <td align="right">
+                @Html.ActionLink("Sửa", "Edit", new { id = item.MaLoai }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.MaLoai }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

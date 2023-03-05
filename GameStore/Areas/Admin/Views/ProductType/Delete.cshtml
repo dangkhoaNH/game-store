@@ -1,0 +1,38 @@
+﻿@model GameStore.Models.tblLoaiSanPham
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_MyLayout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/style.css" rel="stylesheet" type="text/css">
+
+<h2 class="title-manage">Xóa loại sản phẩm</h2>
+
+<h3 style="text-align:center">Bạn thực sự muốn xóa loại sản phẩm này?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên loại sản phẩm:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenLoai)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-danger" style="margin-left:562px" />
+            @Html.ActionLink("Trở Về", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+    <div class="delete-image">
+        <img src="~/Content/images/delete.gif" style="width:28%;margin-left:35.6%" />
+    </div>
+</div>
+
